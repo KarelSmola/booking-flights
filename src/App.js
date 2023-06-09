@@ -1,7 +1,12 @@
 import React from "react";
+import Header from "./components/Header";
 
 const App = () => {
-  return <div>Booking-flights</div>;
+  return (
+    <div className="main-container">
+      <Header />
+    </div>
+  );
 };
 
 export default App;
