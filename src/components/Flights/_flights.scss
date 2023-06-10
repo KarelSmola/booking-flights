@@ -1,0 +1,35 @@
+.flights {
+  &__list {
+    display: grid;
+    row-gap: 1rem;
+  }
+
+  &__flight-wrap {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr) repeat(3, 0.5fr);
+    align-items: center;
+    gap: 2rem;
+    padding: 1rem;
+    border-bottom: 1px solid $third-color;
+  }
+
+  &__flight-item-wrap {
+    display: grid;
+    grid-template-columns: auto auto;
+    justify-content: start;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  &__flight-from {
+  }
+
+  &__flight-to {
+  }
+
+  &__flight-departure {
+  }
+
+  &__flight-arrival {
+  }
+}

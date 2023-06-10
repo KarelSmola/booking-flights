@@ -1,0 +1,17 @@
+.header {
+  display: grid;
+  grid-template-columns: repeat(2, auto);
+  justify-content: start;
+  align-items: center;
+  gap: 1rem;
+  padding: 1rem 2rem;
+  background-color: $second-color;
+
+  &__title {
+    font-size: $font-size-title-1;
+  }
+
+  &__plane-icon {
+    font-size: $font-size-title-2;
+  }
+}

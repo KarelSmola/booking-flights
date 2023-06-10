@@ -3,6 +3,9 @@
 @import "./features/variables";
 
 // COMPONENTS
+@import "../components/Header/header";
+@import "../components/FlightsForm/flights-form";
+@import "../components/Flights/flights";
 
 // OTHERS
 @import "./base";

@@ -1,0 +1,52 @@
+.flights-form {
+  &__form {
+    display: grid;
+    // grid-template-columns: repeat(5, auto);
+    grid-template-columns: repeat(4, 1fr) 0.5fr;
+    align-items: center;
+    gap: 2rem;
+    background-color: $third-color;
+    padding: 0.5rem 2rem;
+  }
+
+  &__label-wrap {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  &__label {
+    font-weight: $font-weight-medium;
+  }
+
+  &__input {
+    border: 1px solid $first-color;
+    padding: 0.5rem;
+
+    &--invalid {
+      background-color: pink;
+      border: 1px solid $fourth-color;
+    }
+  }
+
+  &__order-btn {
+    border: none;
+    font-size: $font-size-title-3;
+    background-color: $first-color;
+    color: $color-light;
+    font-family: $font-primary;
+    font-weight: 500;
+    padding: 1rem 2rem;
+    transition: all 0.2s ease-out;
+
+    &:hover {
+      cursor: pointer;
+      transform: scale(1.05);
+    }
+
+    &:active {
+      transform: scale(0.95);
+    }
+  }
+}
