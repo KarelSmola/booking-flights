@@ -10,7 +10,27 @@
     align-items: center;
     gap: 2rem;
     padding: 1rem;
-    border-bottom: 1px solid $third-color;
+    border: 1px solid $third-color;
+
+    &--sold-out {
+      color: #ccc;
+      background-color: rgba($color: #aaa, $alpha: 0.2);
+      position: relative;
+
+      &::after {
+        content: "SOLD OUT";
+        position: absolute;
+        left: 50%;
+        transform: translateX(-50%);
+        color: $fourth-color;
+        font-size: $font-size-title-3;
+        font-weight: $font-weight-heavy;
+      }
+
+      & p {
+        filter: blur(2px);
+      }
+    }
   }
 
   &__flight-item-wrap {

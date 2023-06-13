@@ -4,7 +4,10 @@ import {
   FaPlaneArrival,
   FaClock,
   FaEuroSign,
+  FaBandcamp,
 } from "react-icons/fa";
+
+import { BsFillPeopleFill } from "react-icons/bs";
 
 import { MdAirlineSeatReclineNormal } from "react-icons/md";
 
@@ -30,4 +33,8 @@ export const Euro = (props) => {
 
 export const Seat = (props) => {
   return <MdAirlineSeatReclineNormal className={props.className} />;
+};
+
+export const People = (props) => {
+  return <BsFillPeopleFill className={props.className} />;
 };

@@ -24,14 +24,21 @@ const transformedData = data.map((flight) => {
       : arrival.getMinutes()
   }`;
 
+  const seats = flight.seats;
+  const seatsOverview = seats.map((freeSeat) => freeSeat.available);
+  const freeSeats = seatsOverview.filter((seat) => seat).length;
+
   let transformedFlight = {
     ...flight,
     departure: departureDate,
     arrival: arrivalDate,
+    amountAvailableSeats: freeSeats,
   };
 
   return transformedFlight;
 });
+
+console.log(transformedData);
 
 const bookingFlights = createSlice({
   name: "booking-flights",
@@ -62,6 +69,10 @@ const bookingFlights = createSlice({
     },
     onChange(state, action) {
       state.bookingData = { ...state.bookingData, ...action.payload };
+    },
+    fillBookingData(state, action) {
+      console.log(action.payload);
+      state.bookingData.from = action.payload.from;
     },
   },
 });

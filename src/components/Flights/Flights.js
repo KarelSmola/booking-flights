@@ -1,18 +1,19 @@
 import React from "react";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import { bookingFlightsActions } from "../../store";
 
 import { DeparturePlane, ArrivalPlane, Clock, Euro, Seat } from "../UI/Icons";
 
 const Flights = () => {
+  const dispatch = useDispatch()
   const flights = useSelector((state) => state.flights);
   const bookingData = useSelector((state) => state.bookingData);
 
-  const freeSeatsAmount = flights.map((seatsAll) => {
-    const seats = seatsAll.seats;
-    const seatsOverview = seats.map((freeSeat) => freeSeat.available);
-    const freeSeats = seatsOverview.filter((seat) => seat).length;
-    return freeSeats;
-  });
+
+  const fillBookingForm = (flight) => {
+    dispatch(bookingFlightsActions.fillBookingData(flight))
+    console.log(flight);
+  };
 
   return (
     <div className="flights">
@@ -31,12 +32,22 @@ const Flights = () => {
             return (
               itemFlight.startsWith(searchFlight) &&
               toFlight.startsWith(searchToFlight) &&
-              departureFlight.startsWith(searchDepartureFlight) &&
-              arrivalFlight.startsWith(searchArrivalFlight)
+              departureFlight.includes(searchDepartureFlight) &&
+              arrivalFlight.includes(searchArrivalFlight)
             );
           })
-          .map((flight, index) => (
-            <li className="flights__flight-wrap" key={flight.id}>
+          .map((flight) => (
+            <li
+              className={
+                flight.amountAvailableSeats === 0
+                  ? "flights__flight-wrap flights__flight-wrap--sold-out"
+                  : "flights__flight-wrap"
+              }
+              key={flight.id}
+              onClick={() => {
+                fillBookingForm(flight);
+              }}
+            >
               <div className="flights__flight-item-wrap">
                 <DeparturePlane />
                 <p className="flights__flight-from">{flight.from}</p>
@@ -57,7 +68,7 @@ const Flights = () => {
               </div>
               <div className="flights__flight-item-wrap">
                 <Seat />
-                <p>{freeSeatsAmount[index]}</p>
+                <p>{flight.amountAvailableSeats}</p>
               </div>
             </li>
           ))}

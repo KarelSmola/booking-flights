@@ -2,9 +2,17 @@ import React, { useReducer } from "react";
 import { useDispatch } from "react-redux";
 import { bookingFlightsActions } from "../../store";
 
+import { People } from "../UI/Icons";
+
 const initialState = {
-  inputValues: { from: "", to: "", departure: "", arrival: "" },
-  touched: { from: false, to: false, departure: false, arrival: false },
+  inputValues: { from: "", to: "", departure: "", arrival: "", tickets: 0 },
+  touched: {
+    from: false,
+    to: false,
+    departure: false,
+    arrival: false,
+    tickets: false,
+  },
 };
 
 const formReducer = (state, action) => {
@@ -28,6 +36,7 @@ const formReducer = (state, action) => {
         to: true,
         departure: true,
         arrival: true,
+        tickets: true,
       },
     };
   }
@@ -59,6 +68,10 @@ const FlightsForm = () => {
   const validClass = "flights-form__input";
   const valuesState = state.inputValues;
 
+  const validTickets = valuesState.tickets > 0;
+  const invalidTickets = !validTickets && state.touched.tickets;
+  const ticketsClasses = invalidTickets ? invalidClasses : validClass;
+
   const validFrom = valuesState.from.trim() !== "";
   const invalidFrom = !validFrom && state.touched.from;
   const fromClasses = invalidFrom ? invalidClasses : validClass;
@@ -89,6 +102,7 @@ const FlightsForm = () => {
       to: state.inputValues.to,
       departure: state.inputValues.departure,
       arrival: state.inputValues.arrival,
+      tickets: state.inputValues.tickets,
     };
 
     dispatch(bookingFlightsActions.order(orderData));
@@ -99,6 +113,20 @@ const FlightsForm = () => {
   return (
     <div className="flights-form">
       <form className="flights-form__form" onSubmit={submitHandler}>
+        <div className="flights-form__label-wrap">
+          <label className="flights-form__label" htmlFor="tickets-input">
+            <People />
+          </label>
+          <input
+            className={ticketsClasses}
+            type="number"
+            id="tickets-input"
+            name="tickets"
+            value={state.inputValues.tickets}
+            onChange={inputChangeHandler}
+            onBlur={inputBlurHandler}
+          />
+        </div>
         <div className="flights-form__label-wrap">
           <label className="flights-form__label" htmlFor="from-input">
             From
@@ -133,7 +161,7 @@ const FlightsForm = () => {
           </label>
           <input
             className={departureClasses}
-            type="date"
+            type="text"
             id="departure"
             name="departure"
             value={state.inputValues.departure}
@@ -147,7 +175,7 @@ const FlightsForm = () => {
           </label>
           <input
             className={arrivalClasses}
-            type="date"
+            type="text"
             id="arrival"
             name="arrival"
             value={state.inputValues.arrival}
