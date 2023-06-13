@@ -1,32 +1,11 @@
-import React, { useState } from "react";
-import data from "../../data/data";
-import { weekdays } from "../../data/data";
+import React from "react";
+import { useSelector } from "react-redux";
 
 import { DeparturePlane, ArrivalPlane, Clock, Euro, Seat } from "../UI/Icons";
 
 const Flights = () => {
-  const [flights, setFlights] = useState(data);
-  // console.log(data);
-
-  const transformDeparture = flights.map((flight) => {
-    let date = new Date(flight.departure);
-    const newDeparture = `${weekdays[date.getDay()]} ${date.getDate()}. ${
-      date.getMonth() + 1
-    }. ${date.getHours()}:${
-      date.getMinutes() < 10 ? "0" + date.getMinutes() : date.getMinutes()
-    }`;
-    return newDeparture;
-  });
-
-  const transformArrival = flights.map((flight) => {
-    let date = new Date(flight.arrival);
-    const newArrival = `${date.getDate()}. ${
-      date.getMonth() + 1
-    }. ${date.getFullYear()} ${date.getHours()}:${
-      date.getMinutes() < "10" ? "0" + date.getMinutes() : date.getMinutes()
-    }`;
-    return newArrival;
-  });
+  const flights = useSelector((state) => state.flights);
+  const bookingData = useSelector((state) => state.bookingData);
 
   const freeSeatsAmount = flights.map((seatsAll) => {
     const seats = seatsAll.seats;
@@ -38,34 +17,50 @@ const Flights = () => {
   return (
     <div className="flights">
       <ul className="flights__list">
-        {flights.map((flight, index) => (
-          <li className="flights__flight-wrap" key={flight.id}>
-            <div className="flights__flight-item-wrap">
-              <DeparturePlane />
-              <p className="flights__flight-from">{flight.from}</p>
-            </div>
-            <div className="flights__flight-item-wrap">
-              <ArrivalPlane />
-              <p className="flights__flight-to">{flight.to}</p>
-            </div>
-            <p className="flights__flight-departure">
-              {transformDeparture[index]}
-            </p>
-            <p className="flights__flight-arrival">{transformArrival[index]}</p>
-            <div className="flights__flight-item-wrap">
-              <Clock />
-              <p>{flight.duration}</p>
-            </div>
-            <div className="flights__flight-item-wrap">
-              <Euro />
-              <p>{flight.price}</p>
-            </div>
-            <div className="flights__flight-item-wrap">
-              <Seat />
-              <p>{freeSeatsAmount[index]}</p>
-            </div>
-          </li>
-        ))}
+        {flights
+          .filter((flight) => {
+            const itemFlight = flight.from.toLowerCase();
+            const searchFlight = bookingData.from.toLowerCase();
+            const toFlight = flight.to.toLowerCase();
+            const searchToFlight = bookingData.to.toLowerCase();
+            const departureFlight = flight.departure.toLowerCase();
+            const searchDepartureFlight = bookingData.departure.toLowerCase();
+            const arrivalFlight = flight.arrival.toLowerCase();
+            const searchArrivalFlight = bookingData.arrival.toLowerCase();
+
+            return (
+              itemFlight.startsWith(searchFlight) &&
+              toFlight.startsWith(searchToFlight) &&
+              departureFlight.startsWith(searchDepartureFlight) &&
+              arrivalFlight.startsWith(searchArrivalFlight)
+            );
+          })
+          .map((flight, index) => (
+            <li className="flights__flight-wrap" key={flight.id}>
+              <div className="flights__flight-item-wrap">
+                <DeparturePlane />
+                <p className="flights__flight-from">{flight.from}</p>
+              </div>
+              <div className="flights__flight-item-wrap">
+                <ArrivalPlane />
+                <p className="flights__flight-to">{flight.to}</p>
+              </div>
+              <p className="flights__flight-departure">{flight.departure}</p>
+              <p className="flights__flight-arrival">{flight.arrival}</p>
+              <div className="flights__flight-item-wrap">
+                <Clock />
+                <p>{flight.duration}</p>
+              </div>
+              <div className="flights__flight-item-wrap">
+                <Euro />
+                <p>{flight.price}</p>
+              </div>
+              <div className="flights__flight-item-wrap">
+                <Seat />
+                <p>{freeSeatsAmount[index]}</p>
+              </div>
+            </li>
+          ))}
       </ul>
     </div>
   );

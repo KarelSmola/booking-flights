@@ -6,7 +6,7 @@ import Flights from "./components/Flights/Flights";
 
 const App = () => {
   const flightsState = useSelector((state) => state);
-  console.log(flightsState);
+  // console.log(flightsState);
 
   return (
     <div className="main-container">

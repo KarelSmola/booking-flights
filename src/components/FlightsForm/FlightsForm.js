@@ -47,6 +47,7 @@ const FlightsForm = () => {
     const name = event.target.name;
     const value = event.target.value;
     formDispatch({ type: "INPUT_CHANGE_HANDLER", payload: { [name]: value } });
+    dispatch(bookingFlightsActions.onChange({ [name]: value }));
   };
 
   const inputBlurHandler = (event) => {
@@ -132,7 +133,7 @@ const FlightsForm = () => {
           </label>
           <input
             className={departureClasses}
-            type="text"
+            type="date"
             id="departure"
             name="departure"
             value={state.inputValues.departure}
@@ -146,7 +147,7 @@ const FlightsForm = () => {
           </label>
           <input
             className={arrivalClasses}
-            type="text"
+            type="date"
             id="arrival"
             name="arrival"
             value={state.inputValues.arrival}
