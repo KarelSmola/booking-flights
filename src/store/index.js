@@ -38,19 +38,15 @@ const transformedData = data.map((flight) => {
   return transformedFlight;
 });
 
-console.log(transformedData);
-
-const bookingFlights = createSlice({
-  name: "booking-flights",
+const flightsSlice = createSlice({
+  name: "flights-slice",
   initialState: {
     flights: transformedData,
-    bookingData: {
+    filterData: {
       from: "",
       to: "",
       departure: "",
       arrival: "",
-      seats: 0,
-      price: 0,
     },
     from: "",
     to: "",
@@ -68,16 +64,15 @@ const bookingFlights = createSlice({
       state.arrival = arrival;
     },
     onChange(state, action) {
-      state.bookingData = { ...state.bookingData, ...action.payload };
+      state.filterData = { ...state.filterData, ...action.payload };
     },
-    fillBookingData(state, action) {
+    buyTicket(state, action) {
       console.log(action.payload);
-      state.bookingData.from = action.payload.from;
     },
   },
 });
 
-const store = configureStore({ reducer: bookingFlights.reducer });
+const store = configureStore({ reducer: flightsSlice.reducer });
 
-export const bookingFlightsActions = bookingFlights.actions;
+export const flightsSliceActions = flightsSlice.actions;
 export default store;

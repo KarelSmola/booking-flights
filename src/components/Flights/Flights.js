@@ -1,18 +1,16 @@
 import React from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { bookingFlightsActions } from "../../store";
+import { flightsSliceActions } from "../../store";
 
 import { DeparturePlane, ArrivalPlane, Clock, Euro, Seat } from "../UI/Icons";
 
 const Flights = () => {
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
   const flights = useSelector((state) => state.flights);
-  const bookingData = useSelector((state) => state.bookingData);
+  const filterData = useSelector((state) => state.filterData);
 
-
-  const fillBookingForm = (flight) => {
-    dispatch(bookingFlightsActions.fillBookingData(flight))
-    console.log(flight);
+  const orderTicket = (flight) => {
+    dispatch(flightsSliceActions.buyTicket(flight));
   };
 
   return (
@@ -21,13 +19,13 @@ const Flights = () => {
         {flights
           .filter((flight) => {
             const itemFlight = flight.from.toLowerCase();
-            const searchFlight = bookingData.from.toLowerCase();
+            const searchFlight = filterData.from.toLowerCase();
             const toFlight = flight.to.toLowerCase();
-            const searchToFlight = bookingData.to.toLowerCase();
+            const searchToFlight = filterData.to.toLowerCase();
             const departureFlight = flight.departure.toLowerCase();
-            const searchDepartureFlight = bookingData.departure.toLowerCase();
+            const searchDepartureFlight = filterData.departure.toLowerCase();
             const arrivalFlight = flight.arrival.toLowerCase();
-            const searchArrivalFlight = bookingData.arrival.toLowerCase();
+            const searchArrivalFlight = filterData.arrival.toLowerCase();
 
             return (
               itemFlight.startsWith(searchFlight) &&
@@ -45,7 +43,7 @@ const Flights = () => {
               }
               key={flight.id}
               onClick={() => {
-                fillBookingForm(flight);
+                orderTicket(flight);
               }}
             >
               <div className="flights__flight-item-wrap">
@@ -70,6 +68,7 @@ const Flights = () => {
                 <Seat />
                 <p>{flight.amountAvailableSeats}</p>
               </div>
+              <button className="flights__order-btn">Buy</button>
             </li>
           ))}
       </ul>

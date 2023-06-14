@@ -1,22 +1,16 @@
-.flights-form {
-  &__form {
-    display: grid;
-    grid-template-columns: 0.5fr repeat(4, 1fr) 0.5fr;
-    align-items: center;
-    gap: 1.5rem;
-    background-color: $third-color;
-    padding: 0.5rem 2rem;
-  }
+.filter-flights {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr) 0.5fr;
+  align-items: center;
+  gap: 1.5rem;
+  background-color: $third-color;
+  padding: 1rem 2rem;
 
   &__label-wrap {
     display: grid;
     grid-template-columns: auto 1fr;
     align-items: center;
     gap: 0.5rem;
-
-    &:first-child input {
-      width: 5rem;
-    }
   }
 
   &__label {

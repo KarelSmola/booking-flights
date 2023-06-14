@@ -6,11 +6,12 @@
 
   &__flight-wrap {
     display: grid;
-    grid-template-columns: repeat(4, 1fr) repeat(3, 0.5fr);
+    grid-template-columns: repeat(4, 2fr) repeat(2, 0.5fr) 1fr 0.5fr;
     align-items: center;
     gap: 2rem;
     padding: 1rem;
     border: 1px solid $third-color;
+    transition: all 0.1s ease-out;
 
     &--sold-out {
       color: #ccc;
@@ -31,6 +32,13 @@
         filter: blur(2px);
       }
     }
+
+    &:hover {
+      cursor: pointer;
+      box-shadow: 0 0 0.3rem $third-color;
+      transform: scale(1.01);
+      font-weight: $font-weight-medium;
+    }
   }
 
   &__flight-item-wrap {
@@ -41,15 +49,16 @@
     gap: 0.5rem;
   }
 
-  &__flight-from {
-  }
+  &__order-btn {
+    padding: 0.5rem 2rem;
+    background-color: transparent;
+    border: 1px solid $third-color;
+    font-weight: $font-weight-heavy;
 
-  &__flight-to {
-  }
-
-  &__flight-departure {
-  }
-
-  &__flight-arrival {
+    &:hover {
+      cursor: pointer;
+      background-color: $third-color;
+      color: $color-light;
+    }
   }
 }
