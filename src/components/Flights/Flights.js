@@ -1,6 +1,6 @@
 import React from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { flightsSliceActions } from "../../store/flightsSlice";
+import { bookingSliceActions } from "../../store/bookingSlice";
 
 import { DeparturePlane, ArrivalPlane, Clock, Euro, Seat } from "../UI/Icons";
 
@@ -10,7 +10,7 @@ const Flights = () => {
   const filterData = useSelector((state) => state.flights.filterData);
 
   const orderTicket = (flight) => {
-    dispatch(flightsSliceActions.buyTicket(flight));
+    dispatch(bookingSliceActions.buyTicket(flight));
   };
 
   return (

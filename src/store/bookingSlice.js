@@ -3,23 +3,30 @@ import { createSlice } from "@reduxjs/toolkit";
 const bookingSlice = createSlice({
   name: "booking-slice",
   initialState: {
+    bookingForm: true,
     bookingData: {
       from: "",
       to: "",
       departure: "",
       arrival: "",
-      seats: 0,
+      ticketsAmount: 1,
       price: 0,
+      amountAvailableSeats: 0,
+      anotherPassangers: [],
     },
   },
   reducers: {
     buyTicket(state, action) {
+      state.bookingForm = true;
+      state.bookingData = { ...action.payload, anotherPassangers: [] };
       console.log(action.payload);
-      const { from, to, departure, arrival } = action.payload;
-      state.bookingData.from = from;
-      state.bookingData.to = to;
-      state.bookingData.departure = departure;
-      state.bookingData.arrival = arrival;
+    },
+    newPassenger(state, action) {
+      state.bookingData.ticketsAmount = state.bookingData.ticketsAmount + 1;
+      state.bookingData.anotherPassangers = [
+        ...state.bookingData.anotherPassangers,
+        { ...action.payload },
+      ];
     },
   },
 });
