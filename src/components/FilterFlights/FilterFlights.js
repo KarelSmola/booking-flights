@@ -1,10 +1,10 @@
 import React from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { flightsSliceActions } from "../../store";
+import { flightsSliceActions } from "../../store/flightsSlice";
 
 const FilterFlights = () => {
   const dispatch = useDispatch();
-  const filterValues = useSelector((state) => state.filterData);
+  const filterValues = useSelector((state) => state.flights.filterData);
 
   const inputChangeHandler = (event) => {
     const name = event.target.name;

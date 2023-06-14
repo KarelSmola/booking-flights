@@ -1,13 +1,13 @@
 import React from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { flightsSliceActions } from "../../store";
+import { flightsSliceActions } from "../../store/flightsSlice";
 
 import { DeparturePlane, ArrivalPlane, Clock, Euro, Seat } from "../UI/Icons";
 
 const Flights = () => {
   const dispatch = useDispatch();
-  const flights = useSelector((state) => state.flights);
-  const filterData = useSelector((state) => state.filterData);
+  const flights = useSelector((state) => state.flights.flights);
+  const filterData = useSelector((state) => state.flights.filterData);
 
   const orderTicket = (flight) => {
     dispatch(flightsSliceActions.buyTicket(flight));
