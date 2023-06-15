@@ -1,25 +1,28 @@
 import React from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { bookingSliceActions } from "../../store/bookingSlice";
-import AnotherPassangerForm from "./AnotherPassangerForm";
+import AnotherPassengerForm from "./AnotherPassengerForm";
 
 const BookingForm = () => {
   const dispatch = useDispatch();
   const bookingData = useSelector((state) => state.booking.bookingData);
+
   const ticketsAmount = useSelector(
     (state) => state.booking.bookingData.ticketsAmount
   );
-  const anotherPassangers = useSelector(
-    (state) => state.booking.bookingData.anotherPassangers
+  console.log(ticketsAmount);
+  const anotherPassengers = useSelector(
+    (state) => state.booking.bookingData.anotherPassengers
   );
-  console.log(anotherPassangers);
 
-  const addPassanger = () => {
+  const addPassenger = () => {
     dispatch(
       bookingSliceActions.newPassenger({
         id: Math.random(),
         firstName: "",
         lastName: "",
+        email: "",
+        phone: "",
       })
     );
   };
@@ -29,7 +32,6 @@ const BookingForm = () => {
   return (
     <div className="booking-form">
       <h1 className="booking-form__title">Buy Tickets</h1>
-
       <div className="booking-form__info-wrap">
         <h3 className="booking-form__info-title">From</h3>
         <p className="booking-form__info">{bookingData.from}</p>
@@ -71,13 +73,10 @@ const BookingForm = () => {
         <h3 className="booking-form__info-title">Available seats</h3>
         <p className="booking-form__info">{bookingData.amountAvailableSeats}</p>
       </div>
-      <button onClick={addPassanger}>Add another passager</button>
-      {anotherPassangers.length > 0 &&
-        anotherPassangers.map((passanger) => (
-          <AnotherPassangerForm
-            firstName={passanger.firsName}
-            lastName={passanger.lastName}
-          />
+      <button onClick={addPassenger}>Add another passenger</button>
+      {anotherPassengers.length > 0 &&
+        anotherPassengers.map((passenger) => (
+          <AnotherPassengerForm id={passenger.id} />
         ))}
       <button>
         Buy {ticketsAmount} {numberOfTickets}
