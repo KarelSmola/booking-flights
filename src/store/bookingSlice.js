@@ -3,7 +3,7 @@ import { createSlice } from "@reduxjs/toolkit";
 const bookingSlice = createSlice({
   name: "booking-slice",
   initialState: {
-    bookingForm: true,
+    bookingForm: false,
     bookingData: {
       from: "",
       to: "",
@@ -12,6 +12,13 @@ const bookingSlice = createSlice({
       ticketsAmount: 0,
       price: 0,
       amountAvailableSeats: 0,
+      mainPassenger: {
+        firstName: "",
+        lastName: "",
+        email: "",
+        phone: "",
+        seat: "",
+      },
       anotherPassengers: [],
     },
   },
@@ -19,32 +26,53 @@ const bookingSlice = createSlice({
     buyTicket(state, action) {
       state.bookingForm = true;
       state.bookingData = {
+        ...state.bookingData,
         ...action.payload,
         ticketsAmount: state.bookingData.ticketsAmount + 1,
-        anotherPassengers: [],
       };
-      console.log(action.payload);
     },
     newPassenger(state, action) {
-      state.bookingData.ticketsAmount = state.bookingData.ticketsAmount + 1;
-      state.bookingData.amountAvailableSeats =
-        state.bookingData.amountAvailableSeats - 1;
-      state.bookingData.anotherPassengers = [
-        ...state.bookingData.anotherPassengers,
-        { ...action.payload },
-      ];
+      state.bookingData = {
+        ...state.bookingData,
+        ticketsAmount: state.bookingData.ticketsAmount + 1,
+        amountAvailableSeats: state.bookingData.amountAvailableSeats - 1,
+        anotherPassengers: [
+          ...state.bookingData.anotherPassengers,
+          { ...action.payload },
+        ],
+      };
     },
     onChange(state, action) {
+      state.bookingData = {
+        ...state.bookingData,
+        mainPassenger: {
+          ...state.bookingData.mainPassenger,
+          ...action.payload,
+        },
+      };
+    },
+    selectSeat(state, action) {
       console.log(action.payload);
+      state.bookingData = {
+        ...state.bookingData,
+        mainPassenger: {
+          ...state.bookingData.mainPassenger,
+          seat: action.payload,
+        },
+      };
     },
     removePassenger(state, action) {
       state.bookingData.ticketsAmount = state.bookingData.ticketsAmount - 1;
       state.bookingData.amountAvailableSeats =
         state.bookingData.amountAvailableSeats + 1;
+
       state.bookingData.anotherPassengers =
         state.bookingData.anotherPassengers.filter((passenger) => {
           return passenger.id !== action.payload;
         });
+    },
+    orderTickets(state, action) {
+      console.log(action.payload);
     },
   },
 });

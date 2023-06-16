@@ -10,7 +10,11 @@ const Flights = () => {
   const filterData = useSelector((state) => state.flights.filterData);
 
   const orderTicket = (flight) => {
-    dispatch(bookingSliceActions.buyTicket(flight));
+    const adjustedFlight = {
+      ...flight,
+      amountAvailableSeats: flight.amountAvailableSeats - 1,
+    };
+    dispatch(bookingSliceActions.buyTicket(adjustedFlight));
   };
 
   return (

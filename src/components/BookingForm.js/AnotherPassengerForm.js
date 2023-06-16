@@ -4,7 +4,7 @@ import { bookingSliceActions } from "../../store/bookingSlice";
 
 const AnotherPassengerForm = (props) => {
   const dispatch = useDispatch();
-  const otherPassenger = useSelector(
+  const anotherPassengers = useSelector(
     (state) => state.booking.bookingData.anotherPassengers
   );
 
@@ -28,7 +28,7 @@ const AnotherPassengerForm = (props) => {
             type="text"
             id="first-name"
             name="first-name"
-            value={otherPassenger.firstName}
+            value={anotherPassengers.firstName}
             onChange={inputChangeHandler}
           />
         </div>
@@ -38,7 +38,7 @@ const AnotherPassengerForm = (props) => {
             type="text"
             id="last-name"
             name="last-name"
-            value={otherPassenger.firstName}
+            value={anotherPassengers.firstName}
             onChange={inputChangeHandler}
           />
         </div>

@@ -1,0 +1,29 @@
+.booking-form {
+  &__title {
+  }
+
+  &__info-wrap {
+  }
+
+  &__info-title {
+  }
+
+  &__info {
+  }
+
+  &__passanger-form {
+  }
+
+  &__add-passenger-btn {
+    cursor: pointer;
+
+    &--disable {
+      cursor: none;
+      pointer-events: none;
+      color: gray;
+    }
+  }
+
+  &__buy-btn {
+  }
+}

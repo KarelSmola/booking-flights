@@ -6,14 +6,17 @@ import AnotherPassengerForm from "./AnotherPassengerForm";
 const BookingForm = () => {
   const dispatch = useDispatch();
   const bookingData = useSelector((state) => state.booking.bookingData);
-
   const ticketsAmount = useSelector(
     (state) => state.booking.bookingData.ticketsAmount
   );
-  console.log(ticketsAmount);
   const anotherPassengers = useSelector(
     (state) => state.booking.bookingData.anotherPassengers
   );
+  const availableTickets = useSelector(
+    (state) => state.booking.bookingData.amountAvailableSeats
+  );
+
+  const availableSeats = bookingData.seats.filter((seat) => seat.available);
 
   const addPassenger = () => {
     dispatch(
@@ -27,7 +30,17 @@ const BookingForm = () => {
     );
   };
 
+  const inputChangeHandler = (event) => {
+    const name = event.target.name;
+    const value = event.target.value;
+    dispatch(bookingSliceActions.onChange({ [name]: value }));
+  };
+
   const numberOfTickets = ticketsAmount === 1 ? "ticket" : "tickets";
+  const addPassengerClasses =
+    availableTickets === 0
+      ? "booking-form__add-passenger-btn--disable"
+      : "booking-form__add-passenger-btn";
 
   return (
     <div className="booking-form">
@@ -52,33 +65,94 @@ const BookingForm = () => {
         <h3 className="booking-form__info-title">Passanger info</h3>
         <form className="booking-form__passanger-form">
           <div className="booking-form__label-wrap">
-            <label className="booking-form__label">First Name</label>
-            <input className="booking-form__input" type="text" />
+            <label className="booking-form__label" htmlFor="first-name">
+              First Name
+            </label>
+            <input
+              className="booking-form__input"
+              type="text"
+              id="first-name"
+              name="firstName"
+              value={bookingData.mainPassenger.firstName}
+              onChange={inputChangeHandler}
+            />
           </div>
           <div className="booking-form__label-wrap">
-            <label className="booking-form__label">Last Name</label>
-            <input className="booking-form__input" type="text" />
+            <label className="booking-form__label" htmlFor="last-name">
+              Last Name
+            </label>
+            <input
+              className="booking-form__input"
+              type="text"
+              id="last-name"
+              name="lastName"
+              value={bookingData.mainPassenger.lastName}
+              onChange={inputChangeHandler}
+            />
           </div>
           <div className="booking-form__label-wrap">
-            <label className="booking-form__label">Email</label>
-            <input className="booking-form__input" type="mail" />
+            <label className="booking-form__label" htmlFor="email">
+              Email
+            </label>
+            <input
+              className="booking-form__input"
+              type="mail"
+              id="email"
+              name="email"
+              value={bookingData.mainPassenger.email}
+              onChange={inputChangeHandler}
+            />
           </div>
           <div className="booking-form__label-wrap">
-            <label className="booking-form__label">Phone</label>
-            <input className="booking-form__input" type="phone" />
+            <label className="booking-form__label" htmlFor="phone">
+              Phone
+            </label>
+            <input
+              className="booking-form__input"
+              type="tel"
+              id="phone"
+              name="phone"
+              value={bookingData.mainPassenger.phone}
+              onChange={inputChangeHandler}
+            />
           </div>
         </form>
+      </div>
+      <div className="booking-form__info-wrap">
+        <h3 className="booking-form__info-title">Seat number</h3>
+        <select
+          name="seat-number"
+          id="seat-number"
+          onChange={(event) => {
+            dispatch(bookingSliceActions.selectSeat(event.target.value));
+          }}
+        >
+          {availableSeats.map((seat) => (
+            <option value={seat.number}>{seat.number}</option>
+          ))}
+        </select>
       </div>
       <div className="booking-form__info-wrap">
         <h3 className="booking-form__info-title">Available seats</h3>
         <p className="booking-form__info">{bookingData.amountAvailableSeats}</p>
       </div>
-      <button onClick={addPassenger}>Add another passenger</button>
+      <div className="booking-form__info-wrap">
+        <h3 className="booking-form__info-title">Price</h3>
+        <p className="booking-form__info">{bookingData.price} &euro;</p>
+      </div>
+      <button className={addPassengerClasses} onClick={addPassenger}>
+        Add another passenger
+      </button>
       {anotherPassengers.length > 0 &&
         anotherPassengers.map((passenger) => (
           <AnotherPassengerForm id={passenger.id} />
         ))}
-      <button>
+      <button
+        className="booking-form__buy-btn"
+        onClick={() => {
+          dispatch(bookingSliceActions.orderTickets(bookingData));
+        }}
+      >
         Buy {ticketsAmount} {numberOfTickets}
       </button>
     </div>
