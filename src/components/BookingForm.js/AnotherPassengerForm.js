@@ -1,84 +1,84 @@
-import React, { useState } from "react";
+import React from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { bookingSliceActions } from "../../store/bookingSlice";
 
 const AnotherPassengerForm = (props) => {
-  const [passengerData, setPassengerData] = useState({
-    firstName: "",
-    lastName: "",
-    email: "",
-    phone: "",
-  });
   const dispatch = useDispatch();
-  const anotherPassengers = useSelector(
-    (state) => state.booking.bookingData.anotherPassengers
-  );
 
   const inputChangeHandler = (event) => {
     const value = event.target.value;
     const name = event.target.name;
-    setPassengerData((prevData) => ({ ...prevData, [name]: value }));
-
-    // dispatch(bookingSliceActions.anotherPassengersData({ [name]: value }));
-  };
-
-  const submitHandler = (event) => {
-    event.preventDefault();
     dispatch(
       bookingSliceActions.anotherPassengersData({
-        id: props.id,
-        ...passengerData,
+        [name]: value,
       })
     );
   };
 
   return (
-    <div>
-      <h3>Anohter passenger</h3>
-      <form onSubmit={submitHandler}>
-        <div>
-          <label htmlFor="first-name">First Name</label>
-          <input
-            type="text"
-            id="first-name"
-            name="firstName"
-            value={passengerData.firstName}
-            onChange={inputChangeHandler}
-          />
-        </div>
-        <div>
-          <label htmlFor="last-name">Last Name</label>
-          <input
-            type="text"
-            id="last-name"
-            name="lastName"
-            value={passengerData.lastName}
-            onChange={inputChangeHandler}
-          />
-        </div>
-        <div>
-          <label htmlFor="email">Email</label>
-          <input
-            type="text"
-            id="email"
-            name="email"
-            value={passengerData.email}
-            onChange={inputChangeHandler}
-          />
-        </div>
-        <div>
-          <label htmlFor="phone">Phone</label>
-          <input
-            type="text"
-            id="phone"
-            name="phone"
-            value={passengerData.phone}
-            onChange={inputChangeHandler}
-          />
-        </div>
-        <button type="submit">OK</button>
-      </form>
+    <div className="another-passenger">
+      <div className="another-passenger__info-wrap">
+        <h3 className="another-passenger__info-title">Another passenger</h3>
+        <form className="another-passenger__form">
+          <div className="another-passenger__label-wrap">
+            <label htmlFor="first-name" className="another-passenger__label">
+              First Name
+            </label>
+            <input
+              className="another-passenger__input"
+              type="text"
+              id="first-name"
+              name="firstName"
+              value={""}
+              onChange={inputChangeHandler}
+            />
+          </div>
+          <div className="another-passenger__label-wrap">
+            <label htmlFor="last-name" className="another-passenger__label">
+              Last Name
+            </label>
+            <input
+              className="another-passenger__input"
+              type="text"
+              id="last-name"
+              name="lastName"
+              value={""}
+              onChange={inputChangeHandler}
+            />
+          </div>
+          <div className="another-passenger__label-wrap">
+            <label htmlFor="email" className="another-passenger__label">
+              Email
+            </label>
+            <input
+              className="another-passenger__input"
+              type="text"
+              id="email"
+              name="email"
+              value={""}
+              onChange={inputChangeHandler}
+            />
+          </div>
+          <div className="another-passenger__label-wrap">
+            <label htmlFor="phone" className="another-passenger__label">
+              Phone
+            </label>
+            <input
+              className="another-passenger__input"
+              type="text"
+              id="phone"
+              name="phone"
+              value={""}
+              onChange={inputChangeHandler}
+            />
+          </div>
+          {/* <button className="another-passenger__ok-btn" type="submit">
+            OK
+          </button> */}
+        </form>
+      </div>
       <button
+        className="another-passenger__remove-passenger-btn"
         onClick={() => {
           dispatch(bookingSliceActions.removePassenger(props.id));
         }}

@@ -34,7 +34,11 @@ const BookingForm = () => {
   const inputChangeHandler = (event) => {
     const name = event.target.name;
     const value = event.target.value;
-    dispatch(bookingSliceActions.mainPassengerData({ [name]: value }));
+    dispatch(
+      bookingSliceActions.mainPassengerData({
+        [name]: value,
+      })
+    );
   };
 
   const numberOfTickets = ticketsAmount === 1 ? "ticket" : "tickets";
@@ -65,7 +69,7 @@ const BookingForm = () => {
             <p className="booking-form__info">{bookingData.arrival}</p>
           </div>
           <div className="booking-form__info-wrap">
-            <h3 className="booking-form__info-title">Passanger info</h3>
+            <h3 className="booking-form__info-title">Main passanger</h3>
             <form className="booking-form__passanger-form">
               <div className="booking-form__label-wrap">
                 <label className="booking-form__label" htmlFor="first-name">

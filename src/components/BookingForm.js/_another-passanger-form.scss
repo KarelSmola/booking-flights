@@ -1,0 +1,60 @@
+.another-passenger {
+  display: grid;
+  gap: 1rem;
+
+  &__info-wrap {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    align-items: center;
+  }
+
+  &__info-title {
+  }
+
+  &__form {
+    display: grid;
+    gap: 0.5rem;
+  }
+
+  &__label-wrap {
+  }
+
+  &__label {
+  }
+
+  &__input {
+    border: 1px solid $third-color;
+    padding: 0.5rem;
+
+    &:focus {
+      outline: none;
+      box-shadow: 0 0 0.3rem $third-color;
+    }
+  }
+
+  &__ok-btn {
+    padding: 0.5rem 2rem;
+    background-color: transparent;
+    border: 1px solid $third-color;
+    font-weight: $font-weight-heavy;
+
+    &:hover {
+      cursor: pointer;
+      background-color: $third-color;
+      color: $color-light;
+    }
+  }
+
+  &__remove-passenger-btn {
+    padding: 0.5rem 2rem;
+    background-color: transparent;
+    border: 1px solid $third-color;
+    font-weight: $font-weight-heavy;
+
+    &:hover {
+      cursor: pointer;
+      background-color: $third-color;
+      color: $color-light;
+    }
+  }
+}

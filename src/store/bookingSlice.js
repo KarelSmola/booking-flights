@@ -19,6 +19,7 @@ const bookingSlice = createSlice({
         phone: "",
         seat: "",
       },
+      nextPassengers: false,
       anotherPassengers: [],
     },
   },
@@ -43,6 +44,7 @@ const bookingSlice = createSlice({
       };
     },
     mainPassengerData(state, action) {
+      console.log(action.payload);
       state.bookingData = {
         ...state.bookingData,
         mainPassenger: {
@@ -56,7 +58,8 @@ const bookingSlice = createSlice({
       state.bookingData = {
         ...state.bookingData,
         anotherPassengers: [
-          { ...state.bookingData.anotherPassengers, ...action.payload },
+          ...state.bookingData.anotherPassengers,
+          { ...action.payload },
         ],
       };
     },
