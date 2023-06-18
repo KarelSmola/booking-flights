@@ -1,8 +1,14 @@
-import React from "react";
+import React, { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { bookingSliceActions } from "../../store/bookingSlice";
 
 const AnotherPassengerForm = (props) => {
+  const [passengerData, setPassengerData] = useState({
+    firstName: "",
+    lastName: "",
+    email: "",
+    phone: "",
+  });
   const dispatch = useDispatch();
   const anotherPassengers = useSelector(
     (state) => state.booking.bookingData.anotherPassengers
@@ -11,11 +17,19 @@ const AnotherPassengerForm = (props) => {
   const inputChangeHandler = (event) => {
     const value = event.target.value;
     const name = event.target.name;
-    dispatch(bookingSliceActions.onChange({ [name]: value }));
+    setPassengerData((prevData) => ({ ...prevData, [name]: value }));
+
+    // dispatch(bookingSliceActions.anotherPassengersData({ [name]: value }));
   };
 
   const submitHandler = (event) => {
     event.preventDefault();
+    dispatch(
+      bookingSliceActions.anotherPassengersData({
+        id: props.id,
+        ...passengerData,
+      })
+    );
   };
 
   return (
@@ -27,8 +41,8 @@ const AnotherPassengerForm = (props) => {
           <input
             type="text"
             id="first-name"
-            name="first-name"
-            value={anotherPassengers.firstName}
+            name="firstName"
+            value={passengerData.firstName}
             onChange={inputChangeHandler}
           />
         </div>
@@ -37,8 +51,8 @@ const AnotherPassengerForm = (props) => {
           <input
             type="text"
             id="last-name"
-            name="last-name"
-            value={anotherPassengers.firstName}
+            name="lastName"
+            value={passengerData.lastName}
             onChange={inputChangeHandler}
           />
         </div>
@@ -48,8 +62,8 @@ const AnotherPassengerForm = (props) => {
             type="text"
             id="email"
             name="email"
-            value={""}
-            onChange={() => {}}
+            value={passengerData.email}
+            onChange={inputChangeHandler}
           />
         </div>
         <div>
@@ -58,8 +72,8 @@ const AnotherPassengerForm = (props) => {
             type="text"
             id="phone"
             name="phone"
-            value={""}
-            onChange={() => {}}
+            value={passengerData.phone}
+            onChange={inputChangeHandler}
           />
         </div>
         <button type="submit">OK</button>
