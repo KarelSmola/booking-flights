@@ -4,12 +4,17 @@ import { bookingSliceActions } from "../../store/bookingSlice";
 
 const AnotherPassengerForm = (props) => {
   const dispatch = useDispatch();
+  const anotherPassengers = useSelector(
+    (state) => state.booking.bookingData.anotherPassengers
+  );
+  console.log(anotherPassengers);
 
   const inputChangeHandler = (event) => {
     const value = event.target.value;
     const name = event.target.name;
     dispatch(
       bookingSliceActions.anotherPassengersData({
+        id: props.id,
         [name]: value,
       })
     );
@@ -29,7 +34,7 @@ const AnotherPassengerForm = (props) => {
               type="text"
               id="first-name"
               name="firstName"
-              value={""}
+              value={anotherPassengers.firstName}
               onChange={inputChangeHandler}
             />
           </div>
@@ -42,7 +47,7 @@ const AnotherPassengerForm = (props) => {
               type="text"
               id="last-name"
               name="lastName"
-              value={""}
+              value={anotherPassengers.lastName}
               onChange={inputChangeHandler}
             />
           </div>
@@ -55,7 +60,7 @@ const AnotherPassengerForm = (props) => {
               type="text"
               id="email"
               name="email"
-              value={""}
+              value={anotherPassengers.email}
               onChange={inputChangeHandler}
             />
           </div>
@@ -68,7 +73,7 @@ const AnotherPassengerForm = (props) => {
               type="text"
               id="phone"
               name="phone"
-              value={""}
+              value={anotherPassengers.phone}
               onChange={inputChangeHandler}
             />
           </div>

@@ -7,6 +7,7 @@
   width: 40rem;
   background-color: $color-light;
   padding: 2rem;
+  transition: all 0.5s ease-out;
 
   display: grid;
   gap: 1rem;
@@ -79,6 +80,23 @@
   }
 
   &__buy-btn {
+    padding: 0.5rem 2rem;
+    background-color: transparent;
+    border: 1px solid $third-color;
+    font-weight: $font-weight-heavy;
+
+    &:hover {
+      cursor: pointer;
+      background-color: $third-color;
+      color: $color-light;
+    }
+  }
+
+  &__close-btn {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+
     padding: 0.5rem 2rem;
     background-color: transparent;
     border: 1px solid $third-color;

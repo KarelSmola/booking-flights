@@ -167,6 +167,14 @@ const BookingForm = () => {
           >
             Buy {ticketsAmount} {numberOfTickets}
           </button>
+          <button
+            className="booking-form__close-btn"
+            onClick={() => {
+              dispatch(bookingSliceActions.closeBookingForm());
+            }}
+          >
+            X
+          </button>
         </div>,
         document.getElementById("modal")
       )}

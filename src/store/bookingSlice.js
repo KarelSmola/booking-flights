@@ -4,6 +4,7 @@ const bookingSlice = createSlice({
   name: "booking-slice",
   initialState: {
     bookingForm: false,
+    orderSummary: false,
     bookingData: {
       from: "",
       to: "",
@@ -44,7 +45,6 @@ const bookingSlice = createSlice({
       };
     },
     mainPassengerData(state, action) {
-      console.log(action.payload);
       state.bookingData = {
         ...state.bookingData,
         mainPassenger: {
@@ -58,8 +58,7 @@ const bookingSlice = createSlice({
       state.bookingData = {
         ...state.bookingData,
         anotherPassengers: [
-          ...state.bookingData.anotherPassengers,
-          { ...action.payload },
+          { ...state.bookingData.anotherPassengers[0], ...action.payload },
         ],
       };
     },
@@ -84,6 +83,14 @@ const bookingSlice = createSlice({
     },
     orderTickets(state, action) {
       console.log(action.payload);
+      state.bookingForm = false;
+      state.orderSummary = true;
+    },
+    closeBookingForm(state) {
+      state.bookingForm = false;
+    },
+    closeSummary(state) {
+      state.orderSummary = false;
     },
   },
 });

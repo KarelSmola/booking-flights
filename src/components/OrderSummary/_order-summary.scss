@@ -1,0 +1,30 @@
+.order-summary {
+  position: absolute;
+  top: 5rem;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 2;
+  width: 50rem;
+  background-color: $color-light;
+  padding: 2rem;
+
+  &__title {
+  }
+
+  &__close-summary-btn {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+
+    padding: 0.5rem 2rem;
+    background-color: transparent;
+    border: 1px solid $third-color;
+    font-weight: $font-weight-heavy;
+
+    &:hover {
+      cursor: pointer;
+      background-color: $third-color;
+      color: $color-light;
+    }
+  }
+}
