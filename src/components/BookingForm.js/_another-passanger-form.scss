@@ -30,22 +30,14 @@
       outline: none;
       box-shadow: 0 0 0.3rem $third-color;
     }
-  }
 
-  &__ok-btn {
-    padding: 0.5rem 2rem;
-    background-color: transparent;
-    border: 1px solid $third-color;
-    font-weight: $font-weight-heavy;
-
-    &:hover {
-      cursor: pointer;
-      background-color: $third-color;
-      color: $color-light;
+    &--invalid {
+      background-color: rgba($color: $fourth-color, $alpha: 0.3);
+      border: 1px solid $fourth-color;
     }
   }
 
-  &__remove-passenger-btn {
+  &__confirm-btn {
     padding: 0.5rem 2rem;
     background-color: transparent;
     border: 1px solid $third-color;

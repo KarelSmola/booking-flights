@@ -33,6 +33,7 @@ const bookingSlice = createSlice({
         ticketsAmount: state.bookingData.ticketsAmount + 1,
       };
     },
+
     newPassenger(state, action) {
       state.bookingData = {
         ...state.bookingData,
@@ -53,12 +54,25 @@ const bookingSlice = createSlice({
         },
       };
     },
-    anotherPassengersData(state, action) {
-      console.log(action.payload);
+    nextPassenger(state) {
+      state.nextPassenger = true;
+    },
+    anotherPassenger(state, action) {
       state.bookingData = {
         ...state.bookingData,
         anotherPassengers: [
-          { ...state.bookingData.anotherPassengers[0], ...action.payload },
+          ...state.bookingData.anotherPassengers,
+          { ...action.payload },
+        ],
+      };
+    },
+    deletePassenger(state, action) {
+      state.bookingData = {
+        ...state.bookingData,
+        anotherPassengers: [
+          ...state.bookingData.anotherPassengers.filter(
+            (passenger) => passenger.id !== action.payload
+          ),
         ],
       };
     },

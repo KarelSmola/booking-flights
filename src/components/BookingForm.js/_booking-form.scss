@@ -58,6 +58,11 @@
       outline: none;
       box-shadow: 0 0 0.3rem $third-color;
     }
+
+    &--invalid {
+      background-color: rgba($color: $fourth-color, $alpha: 0.3);
+      border: 1px solid $fourth-color;
+    }
   }
 
   &__add-passenger-btn {
@@ -76,6 +81,21 @@
       cursor: none;
       pointer-events: none;
       color: gray;
+    }
+  }
+
+  &__select {
+    border: 1px solid $third-color;
+    padding: 0.5rem;
+
+    &:focus {
+      outline: none;
+      box-shadow: 0 0 0.3rem $third-color;
+    }
+
+    &--invalid {
+      background-color: rgba($color: $fourth-color, $alpha: 0.3);
+      border: 1px solid $fourth-color;
     }
   }
 

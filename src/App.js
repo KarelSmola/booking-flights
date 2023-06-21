@@ -16,7 +16,7 @@ const App = () => {
         <Header />
         <FilterFlights />
         <Flights />
-        {bookingForm && <BookingForm />}
+        {bookingForm && <BookingForm key={Math.random()} />}
         {orderSummary && <OrderSummary />}
       </div>
     </div>
