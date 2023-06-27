@@ -36,7 +36,7 @@ const newPassengerReducer = (state, action) => {
   return state;
 };
 
-const AnotherPassengerForm = (props) => {
+const AnotherPassengerForm = () => {
   const [state, newPassengerDispatch] = useReducer(
     newPassengerReducer,
     initialState
@@ -72,7 +72,7 @@ const AnotherPassengerForm = (props) => {
     }
 
     dispatch(
-      bookingSliceActions.anotherPassenger({
+      bookingSliceActions.anotherPassengerConfirmed({
         id: Math.random(),
         ...state.inputValues,
       })
