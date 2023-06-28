@@ -1,10 +1,16 @@
 import React, { useReducer } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { bookingSliceActions } from "../../store/bookingSlice";
 
 const initialState = {
-  inputValues: { firstName: "", lastName: "", email: "", phone: "" },
-  blur: { firstName: false, lastName: false, email: false, phone: false },
+  inputValues: { firstName: "", lastName: "", email: "", phone: "", seat: "" },
+  blur: {
+    firstName: false,
+    lastName: false,
+    email: false,
+    phone: false,
+    seat: false,
+  },
 };
 
 const newPassengerReducer = (state, action) => {
@@ -25,12 +31,31 @@ const newPassengerReducer = (state, action) => {
   if (action.type === "BLUR_ALL") {
     return {
       ...state,
-      blur: { firstName: true, lastName: true, email: true, phone: true },
+      blur: {
+        firstName: true,
+        lastName: true,
+        email: true,
+        phone: true,
+        seat: true,
+      },
     };
   }
 
   if (action.type === "RESET_VALUES") {
-    return initialState;
+    state.inputValues = {
+      firstName: "",
+      lastName: "",
+      email: "",
+      phone: "",
+      seat: "",
+    };
+    state.blur = {
+      firstName: false,
+      lastName: false,
+      email: false,
+      phone: false,
+      seat: false,
+    };
   }
 
   return state;
@@ -42,6 +67,8 @@ const AnotherPassengerForm = () => {
     initialState
   );
   const dispatch = useDispatch();
+  const bookingData = useSelector((state) => state.booking.bookingData);
+  const availableSeats = bookingData.seats;
 
   const inputChangeHandler = (event) => {
     const value = event.target.value;
@@ -67,18 +94,33 @@ const AnotherPassengerForm = () => {
       type: "BLUR_ALL",
     });
 
-    if (!validFirstName || !validLastName || !validEmail || !validPhone) {
+    if (
+      !validFirstName ||
+      !validLastName ||
+      !validEmail ||
+      !validPhone ||
+      !validSeat
+    ) {
       return;
     }
 
+    const updatedSeats = bookingData.seats.map((seat) =>
+      seat.number === state.inputValues.seat
+        ? { ...seat, available: false }
+        : { ...seat }
+    );
+
+    const anotherPassengerData = {
+      seats: [...updatedSeats],
+      anotherPassenger: [{ id: Math.random(), ...state.inputValues }],
+    };
+
     dispatch(
-      bookingSliceActions.anotherPassengerConfirmed({
-        id: Math.random(),
-        ...state.inputValues,
-      })
+      bookingSliceActions.anotherPassengerConfirmed(anotherPassengerData)
     );
 
     newPassengerDispatch({ type: "RESET_VALUES" });
+    dispatch(bookingSliceActions.closeAnotherPassengerForm())
   };
 
   const invalidClasses = `${"another-passenger__input"} ${"another-passenger__input--invalid"}`;
@@ -101,6 +143,10 @@ const AnotherPassengerForm = () => {
   const validPhone = state.inputValues.phone.trim() !== "";
   const invalidPhone = !validPhone && state.blur.phone;
   const phoneClasses = invalidPhone ? invalidClasses : validClasses;
+
+  const validSeat = state.inputValues.seat.trim() !== "";
+  const invalidSeat = !validSeat && state.blur.seat;
+  const seatClasses = invalidSeat ? invalidClasses : validClasses;
 
   return (
     <div className="another-passenger">
@@ -166,6 +212,26 @@ const AnotherPassengerForm = () => {
               onBlur={inputBlurHandler}
             />
           </div>
+          <div className="booking-form__label-wrap">
+            <label className="booking-form__label" htmlFor="seat">
+              Seat
+            </label>
+            <select
+              className={seatClasses}
+              name="seat"
+              id="seat"
+              onBlur={inputBlurHandler}
+              onChange={inputChangeHandler}
+            >
+              <option value={state.inputValues.seat}>Select seat</option>
+              {availableSeats
+                .filter((seat) => seat.available)
+                .map((seat) => (
+                  <option value={seat.number}>{seat.number}</option>
+                ))}
+            </select>
+          </div>
+
           <button className="another-passenger__confirm-btn" type="submit">
             Confirm
           </button>

@@ -45,6 +45,8 @@
   }
 
   &__label-wrap {
+    display: flex;
+    flex-direction: column;
   }
 
   &__label {

@@ -7,9 +7,24 @@ const AnotherPassengers = () => {
   const anotherPassengers = useSelector(
     (state) => state.booking.bookingData.anotherPassengers
   );
+  const bookingData = useSelector(
+    (state) => state.booking.bookingData
+  );
 
-  const removePassenger = (id) => {
-    dispatch(bookingSliceActions.deletePassenger(id));
+  const removePassenger = (id, passengerSeat) => {
+
+    const updatedSeats = bookingData.seats.map((seat) =>
+      seat.number === passengerSeat
+        ? { ...seat, available: false }
+        : { ...seat }
+    );
+
+    const updatedData = {
+      id: id,
+      seats: [...updatedSeats]
+    }
+
+    dispatch(bookingSliceActions.deletePassenger(updatedData));
   };
 
   return (
@@ -21,10 +36,11 @@ const AnotherPassengers = () => {
             <p>{passenger.lastName}</p>
             <p>{passenger.email}</p>
             <p>{passenger.phone}</p>
+            <p>{passenger.seat}</p>
             <button>Edit</button>
             <button
               onClick={() => {
-                removePassenger(passenger.id);
+                removePassenger(passenger.id, passenger.seat);
               }}
             >
               Remove

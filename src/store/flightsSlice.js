@@ -33,6 +33,7 @@ const transformedData = data.map((flight) => {
     departure: departureDate,
     arrival: arrivalDate,
     amountAvailableSeats: freeSeats,
+    seats,
   };
 
   return transformedFlight;

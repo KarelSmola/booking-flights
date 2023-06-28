@@ -3,6 +3,8 @@ import { createSlice } from "@reduxjs/toolkit";
 const initialState = {
   bookingForm: false,
   orderSummary: false,
+  mainPassenger: false,
+  nextPassengers: false,
   bookingData: {
     from: "",
     to: "",
@@ -18,14 +20,7 @@ const initialState = {
       phone: "",
       seat: "",
     },
-    nextPassengers: false,
     anotherPassengers: [],
-    anotherPassengersForm: {
-      firstName: { value: "", isTouched: false },
-      lastName: { value: "", isTouched: false },
-      email: { value: "", isTouched: false },
-      phone: { value: "", isTouched: false },
-    },
   },
 };
 
@@ -38,10 +33,8 @@ const bookingSlice = createSlice({
       state.bookingData = {
         ...state.bookingData,
         ...action.payload,
-        ticketsAmount: state.bookingData.ticketsAmount + 1,
       };
     },
-
     newPassenger(state, action) {
       state.bookingData = {
         ...state.bookingData,
@@ -54,13 +47,20 @@ const bookingSlice = createSlice({
       };
     },
     mainPassengerData(state, action) {
+      state.mainPassenger = true;
       state.bookingData = {
         ...state.bookingData,
+        ticketsAmount: state.bookingData.ticketsAmount + 1,
+        amountAvailableSeats: state.bookingData.amountAvailableSeats - 1,
         mainPassenger: {
           ...state.bookingData.mainPassenger,
-          ...action.payload,
+          ...action.payload.mainPassenger,
         },
+        seats: [...action.payload.seats],
       };
+    },
+    removeMainPassengerData(state) {
+      state.mainPassenger = false;
     },
     toggleNextPassengerForm(state) {
       state.nextPassengers = !state.nextPassengers;
@@ -72,33 +72,38 @@ const bookingSlice = createSlice({
         amountAvailableSeats: state.bookingData.amountAvailableSeats - 1,
         anotherPassengers: [
           ...state.bookingData.anotherPassengers,
-          { ...action.payload },
+          ...action.payload.anotherPassenger,
         ],
+        seats: [...action.payload.seats],
       };
     },
-    nextPassengerInputValue(state, action) {
-      const name = action.payload.name;
-      const value = action.payload.value;
-      console.log(name, value);
-      state.bookingData = {
-        ...state.bookingData,
-        anotherPassengersForm: {
-          ...state.bookingData.anotherPassengersForm,
-          firstName: {
-            ...state.bookingData.anotherPassengersForm.firstName,
-            name: value,
-          },
-        },
-      };
+    closeAnotherPassengerForm(state) {
+      state.nextPassengers = false;
     },
+    // nextPassengerInputValue(state, action) {
+    //   const value = action.payload.value;
+    //   state.bookingData = {
+    //     ...state.bookingData,
+    //     anotherPassengersForm: {
+    //       ...state.bookingData.anotherPassengersForm,
+    //       firstName: {
+    //         ...state.bookingData.anotherPassengersForm.firstName,
+    //         name: value,
+    //       },
+    //     },
+    //   };
+    // },
     deletePassenger(state, action) {
       state.bookingData = {
         ...state.bookingData,
+        ticketsAmount: state.bookingData.ticketsAmount - 1,
+        amountAvailableSeats: state.bookingData.amountAvailableSeats + 1,
         anotherPassengers: [
           ...state.bookingData.anotherPassengers.filter(
-            (passenger) => passenger.id !== action.payload
+            (passenger) => passenger.id !== action.payload.id
           ),
         ],
+        seats: [...action.payload.seats],
       };
     },
     selectSeat(state, action) {

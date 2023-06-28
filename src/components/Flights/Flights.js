@@ -12,7 +12,6 @@ const Flights = () => {
   const orderTicket = (flight) => {
     const adjustedFlight = {
       ...flight,
-      amountAvailableSeats: flight.amountAvailableSeats - 1,
     };
     dispatch(bookingSliceActions.buyTicket(adjustedFlight));
   };
