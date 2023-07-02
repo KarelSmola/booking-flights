@@ -2,6 +2,8 @@ import React, { useReducer } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { bookingSliceActions } from "../../store/bookingSlice";
 
+import Button from "../../UI/Button";
+
 const initialState = {
   inputValues: { firstName: "", lastName: "", email: "", phone: "", seat: "" },
   blur: {
@@ -120,7 +122,7 @@ const AnotherPassengerForm = () => {
     );
 
     newPassengerDispatch({ type: "RESET_VALUES" });
-    dispatch(bookingSliceActions.closeAnotherPassengerForm())
+    dispatch(bookingSliceActions.closeAnotherPassengerForm());
   };
 
   const invalidClasses = `${"another-passenger__input"} ${"another-passenger__input--invalid"}`;
@@ -232,9 +234,9 @@ const AnotherPassengerForm = () => {
             </select>
           </div>
 
-          <button className="another-passenger__confirm-btn" type="submit">
+          <Button className="another-passenger__confirm-btn" type="submit">
             Confirm
-          </button>
+          </Button>
         </form>
       </div>
     </div>

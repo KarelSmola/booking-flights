@@ -3,6 +3,8 @@ import { createPortal } from "react-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { bookingSliceActions } from "../../store/bookingSlice";
 
+import Button from "../../UI/Button";
+
 const OrderSummary = () => {
   const dispatch = useDispatch();
   const bookingData = useSelector((state) => state.booking.bookingData);
@@ -35,21 +37,21 @@ const OrderSummary = () => {
               </li>
             ))}
           </ul>
-          <button
+          <Button
             onClick={() => {
               dispatch(bookingSliceActions.closeSummary());
             }}
           >
             OK
-          </button>
-          <button
+          </Button>
+          <Button
             className="order-summary__close-summary-btn"
             onClick={() => {
               dispatch(bookingSliceActions.closeSummary());
             }}
           >
             X
-          </button>
+          </Button>
         </div>,
         document.getElementById("modal")
       )}

@@ -47,6 +47,7 @@ const bookingSlice = createSlice({
       };
     },
     mainPassengerData(state, action) {
+      console.log(action.payload);
       state.mainPassenger = true;
       state.bookingData = {
         ...state.bookingData,
@@ -59,8 +60,14 @@ const bookingSlice = createSlice({
         seats: [...action.payload.seats],
       };
     },
-    removeMainPassengerData(state) {
+    removeMainPassengerData(state, action) {
       state.mainPassenger = false;
+      state.bookingData = {
+        ...state.bookingData,
+        ticketsAmount: state.bookingData.ticketsAmount - 1,
+        amountAvailableSeats: state.bookingData.amountAvailableSeats + 1,
+        seats: [...action.payload.seats],
+      };
     },
     toggleNextPassengerForm(state) {
       state.nextPassengers = !state.nextPassengers;
@@ -80,19 +87,6 @@ const bookingSlice = createSlice({
     closeAnotherPassengerForm(state) {
       state.nextPassengers = false;
     },
-    // nextPassengerInputValue(state, action) {
-    //   const value = action.payload.value;
-    //   state.bookingData = {
-    //     ...state.bookingData,
-    //     anotherPassengersForm: {
-    //       ...state.bookingData.anotherPassengersForm,
-    //       firstName: {
-    //         ...state.bookingData.anotherPassengersForm.firstName,
-    //         name: value,
-    //       },
-    //     },
-    //   };
-    // },
     deletePassenger(state, action) {
       state.bookingData = {
         ...state.bookingData,
@@ -126,7 +120,6 @@ const bookingSlice = createSlice({
         });
     },
     orderTickets(state, action) {
-      console.log(action.payload);
       state.bookingData = {
         ...state.bookingData,
         ...action.payload,
@@ -146,8 +139,9 @@ const bookingSlice = createSlice({
         },
       };
     },
-    closeBookingForm() {
-      return initialState;
+    closeBookingForm(state) {
+      state.bookingForm = false;
+      state.orderSummary = true;
     },
     closeSummary(state) {
       state.orderSummary = false;

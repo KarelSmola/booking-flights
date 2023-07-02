@@ -4,7 +4,7 @@ import {
   FaPlaneArrival,
   FaClock,
   FaEuroSign,
-  FaBandcamp,
+  // FaBandcamp,
 } from "react-icons/fa";
 
 import { BsFillPeopleFill } from "react-icons/bs";

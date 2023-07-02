@@ -2,27 +2,24 @@ import React from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { bookingSliceActions } from "../../store/bookingSlice";
 
+import Button from "../../UI/Button";
+
 const AnotherPassengers = () => {
   const dispatch = useDispatch();
   const anotherPassengers = useSelector(
     (state) => state.booking.bookingData.anotherPassengers
   );
-  const bookingData = useSelector(
-    (state) => state.booking.bookingData
-  );
+  const bookingData = useSelector((state) => state.booking.bookingData);
 
   const removePassenger = (id, passengerSeat) => {
-
     const updatedSeats = bookingData.seats.map((seat) =>
-      seat.number === passengerSeat
-        ? { ...seat, available: false }
-        : { ...seat }
+      seat.number === passengerSeat ? { ...seat, available: true } : { ...seat }
     );
 
     const updatedData = {
       id: id,
-      seats: [...updatedSeats]
-    }
+      seats: [...updatedSeats],
+    };
 
     dispatch(bookingSliceActions.deletePassenger(updatedData));
   };
@@ -37,14 +34,13 @@ const AnotherPassengers = () => {
             <p>{passenger.email}</p>
             <p>{passenger.phone}</p>
             <p>{passenger.seat}</p>
-            <button>Edit</button>
-            <button
+            <Button
               onClick={() => {
                 removePassenger(passenger.id, passenger.seat);
               }}
             >
               Remove
-            </button>
+            </Button>
           </li>
         ))}
       </ul>

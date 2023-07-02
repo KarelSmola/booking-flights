@@ -1,0 +1,12 @@
+.button {
+  padding: 0.5rem 2rem;
+  background-color: transparent;
+  border: 1px solid $third-color;
+  font-weight: $font-weight-heavy;
+
+  &:hover {
+    cursor: pointer;
+    background-color: $third-color;
+    color: $color-light;
+  }
+}

@@ -54,6 +54,14 @@ const flightsSlice = createSlice({
     onChange(state, action) {
       state.filterData = { ...state.filterData, ...action.payload };
     },
+    orderTickets(state, action) {
+      console.log(action.payload);
+      console.log(action.payload.amountAvailableSeats);
+      state.flights[0] = {
+        ...state.flights[0],
+        amountAvailableSeats: action.payload.amountAvailableSeats,
+      };
+    },
   },
 });
 

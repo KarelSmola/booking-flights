@@ -1,6 +1,6 @@
 import React from "react";
 
-import { Plane } from "../UI/Icons";
+import { Plane } from "../../UI/Icons";
 
 const Header = () => {
   return (

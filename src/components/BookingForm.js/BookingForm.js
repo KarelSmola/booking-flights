@@ -2,9 +2,12 @@ import React, { Fragment, useReducer } from "react";
 import { createPortal } from "react-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { bookingSliceActions } from "../../store/bookingSlice";
+import { flightsSliceActions } from "../../store/flightsSlice";
 import AnotherPassengerForm from "./AnotherPassengerForm";
 import AnotherPassengers from "../AnotherPassengers/AnotherPassengers";
 import MainPassenger from "../MainPassenger/MainPassenger";
+
+import Button from "../../UI/Button";
 
 const initialState = {
   inputValues: { firstName: "", lastName: "", email: "", phone: "", seat: "" },
@@ -170,34 +173,9 @@ const BookingForm = () => {
     formDispatch({ type: "RESET_VALUES" });
   };
 
-  const buyTickets = (data) => {
-    formDispatch({ type: "BLUR_ALL" });
-
-    if (
-      !validFirstName ||
-      !validLastName ||
-      !validEmail ||
-      !validPhone ||
-      !validSeat
-    ) {
-      return;
-    }
-
-    const { firstName, lastName, email, phone, seat } = state.inputValues;
-
-    const bookingData = {
-      ...data,
-      mainPassenger: {
-        firstName,
-        lastName,
-        email,
-        phone,
-        seat,
-      },
-    };
-
-    dispatch(bookingSliceActions.orderTickets(bookingData));
-    formDispatch({ type: "RESET_VALUES" });
+  const buyTickets = (bookingData) => {
+    // dispatch(bookingSliceActions.orderTickets(bookingData));
+    dispatch(flightsSliceActions.orderTickets(bookingData));
   };
 
   const numberOfTickets = ticketsAmount === 1 ? "ticket" : "tickets";
@@ -205,6 +183,10 @@ const BookingForm = () => {
     bookingState.bookingData.amountAvailableSeats === 0
       ? "booking-form__add-passenger-btn--disable"
       : "booking-form__add-passenger-btn";
+
+  const buyBtnClasses = bookingState.mainPassenger
+    ? "booking-form__buy-btn"
+    : "booking-form__buy-btn--disable";
 
   return (
     <Fragment>
@@ -323,35 +305,35 @@ const BookingForm = () => {
                       ))}
                   </select>
                 </div>
-                <button type="submit">Confirm</button>
+                <Button type="submit">Confirm</Button>
               </form>
             )}
           </div>
 
-          <button className={addPassengerClasses} onClick={toggleForm}>
+          <Button className={addPassengerClasses} onClick={toggleForm}>
             {bookingState.nextPassengers
               ? `${"I don't want to add next passenger"}`
               : `${"Add another passenger"}`}
-          </button>
+          </Button>
 
           {bookingState.nextPassengers && <AnotherPassengerForm />}
           <AnotherPassengers />
-          <button
-            className="booking-form__buy-btn"
+          <Button
+            className={buyBtnClasses}
             onClick={() => {
               buyTickets(bookingData);
             }}
           >
             Buy {ticketsAmount} {numberOfTickets}
-          </button>
-          <button
+          </Button>
+          <Button
             className="booking-form__close-btn"
             onClick={() => {
               dispatch(bookingSliceActions.closeBookingForm());
             }}
           >
             X
-          </button>
+          </Button>
         </div>,
         document.getElementById("modal")
       )}

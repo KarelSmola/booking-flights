@@ -2,12 +2,21 @@ import React from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { bookingSliceActions } from "../../store/bookingSlice";
 
-import { DeparturePlane, ArrivalPlane, Clock, Euro, Seat } from "../UI/Icons";
+import Button from "../../UI/Button";
+import {
+  DeparturePlane,
+  ArrivalPlane,
+  Clock,
+  Euro,
+  Seat,
+} from "../../UI/Icons";
 
 const Flights = () => {
   const dispatch = useDispatch();
+  const bookingState = useSelector((state) => state.booking.bookingData);
   const flights = useSelector((state) => state.flights.flights);
   const filterData = useSelector((state) => state.flights.filterData);
+  console.log(bookingState);
 
   const orderTicket = (flight) => {
     const adjustedFlight = {
@@ -71,7 +80,7 @@ const Flights = () => {
                 <Seat />
                 <p>{flight.amountAvailableSeats}</p>
               </div>
-              <button className="flights__order-btn">Buy</button>
+              <Button className="flights__order-btn">Buy</Button>
             </li>
           ))}
       </ul>

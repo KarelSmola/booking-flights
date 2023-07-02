@@ -12,7 +12,10 @@
 @import "../components//AnotherPassengers/another-passengers";
 @import "../components/OrderSummary/order-summary";
 
+// UI
+@import "../UI/button";
+@import "../UI/icons";
+
 // OTHERS
 @import "./base";
-@import "./icons";
 @import "./layout";
