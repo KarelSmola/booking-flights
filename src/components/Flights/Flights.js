@@ -13,10 +13,8 @@ import {
 
 const Flights = () => {
   const dispatch = useDispatch();
-  const bookingState = useSelector((state) => state.booking.bookingData);
   const flights = useSelector((state) => state.flights.flights);
   const filterData = useSelector((state) => state.flights.filterData);
-  console.log(bookingState);
 
   const orderTicket = (flight) => {
     const adjustedFlight = {

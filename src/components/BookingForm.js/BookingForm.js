@@ -174,8 +174,9 @@ const BookingForm = () => {
   };
 
   const buyTickets = (bookingData) => {
-    // dispatch(bookingSliceActions.orderTickets(bookingData));
     dispatch(flightsSliceActions.orderTickets(bookingData));
+    dispatch(bookingSliceActions.closeBookingForm());
+    formDispatch({ type: "RESET_VALUES" });
   };
 
   const numberOfTickets = ticketsAmount === 1 ? "ticket" : "tickets";

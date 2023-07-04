@@ -55,10 +55,9 @@ const flightsSlice = createSlice({
       state.filterData = { ...state.filterData, ...action.payload };
     },
     orderTickets(state, action) {
-      console.log(action.payload);
-      console.log(action.payload.amountAvailableSeats);
-      state.flights[0] = {
-        ...state.flights[0],
+      console.log(action.payload.id - 1);
+      state.flights[action.payload.id - 1] = {
+        ...state.flights[action.payload.id - 1],
         amountAvailableSeats: action.payload.amountAvailableSeats,
       };
     },
